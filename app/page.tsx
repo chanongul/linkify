@@ -90,9 +90,15 @@ export default async function Home(props: HomeProps) {
     ? `Device is ${detectedDevice}, redirecting to ${match.url}`
     : `No matching entry for detected device: ${detectedDevice}.`;
 
+  const verboseParam = toString(searchParams["verbose"]);
+  const verboseValue = verboseParam?.toLowerCase();
+  const showStatus = verboseValue ? verboseValue !== "false" : true;
+
   return (
-    <>
-      <RedirectStatus message={statusMessage} redirectUrl={match?.url} />
-    </>
+    <RedirectStatus
+      message={statusMessage}
+      redirectUrl={match?.url}
+      showStatus={showStatus}
+    />
   );
 }

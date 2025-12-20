@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 type RedirectStatusProps = {
   message: string;
   redirectUrl?: string;
+  showStatus: boolean;
 };
 
 export default function RedirectStatus({
   message,
   redirectUrl,
+  showStatus,
 }: RedirectStatusProps) {
   const [dots, setDots] = useState(".");
 
@@ -20,7 +22,7 @@ export default function RedirectStatus({
 
     const interval = setInterval(() => {
       setDots((value) => (value.length === 3 ? "." : `${value}.`));
-    }, 500);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [redirectUrl]);
@@ -38,9 +40,13 @@ export default function RedirectStatus({
   }, [redirectUrl]);
 
   return (
-    <p>
-      {message}&nbsp;
-      {redirectUrl ? dots : ""}
-    </p>
+    <>
+      {showStatus && (
+        <p>
+          {message}&nbsp;
+          {redirectUrl ? dots : ""}
+        </p>
+      )}
+    </>
   );
 }
